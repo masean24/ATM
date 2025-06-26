@@ -1,0 +1,331 @@
+/* File: style.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.atm-container {
+    background: #2c3e50;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 450px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.atm-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+}
+
+.screen {
+    background: #1a252f;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    min-height: 400px;
+    color: #ecf0f1;
+    position: relative;
+    border: 3px solid #34495e;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+}
+
+.header h1 {
+    color: #3498db;
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.header p {
+    color: #bdc3c7;
+    font-size: 14px;
+}
+
+.menu-item {
+    background: linear-gradient(145deg, #34495e, #2c3e50);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin: 8px 0;
+    width: 100%;
+    color: #ecf0f1;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.menu-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+    background: linear-gradient(145deg, #3498db, #2980b9);
+}
+
+.menu-item .icon {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.keypad button {
+    background: linear-gradient(145deg, #34495e, #2c3e50);
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    color: #ecf0f1;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.keypad button:hover {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    transform: translateY(-1px);
+}
+
+.keypad button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.input-group {
+    margin: 20px 0;
+}
+
+.input-group label {
+    display: block;
+    color: #bdc3c7;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    background: #34495e;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #ecf0f1;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2ecc71;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.pin-display {
+    background: #2c3e50;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 24px;
+    font-family: monospace;
+    letter-spacing: 8px;
+    color: #3498db;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+}
+
+.btn-danger {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+}
+
+.btn-warning {
+    background: linear-gradient(145deg, #f39c12, #e67e22);
+}
+
+.balance-display {
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.balance-amount {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.transaction-history {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 20px 0;
+}
+
+.transaction-item {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-left: 4px solid #3498db;
+    font-size: 14px;
+}
+
+.transaction-date {
+    color: #bdc3c7;
+    font-size: 12px;
+}
+
+.transaction-amount {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.error {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.success {
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.receipt {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    border: 2px dashed #bdc3c7;
+}
+
+.receipt-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #3498db;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    .atm-container {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .keypad {
+        gap: 8px;
+    }
+
+    .keypad button {
+        padding: 12px;
+        font-size: 16px;
+    }
+}
