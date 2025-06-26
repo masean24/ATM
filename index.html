@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Saat - ATM Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="atm-container">
+        <div class="screen" id="screen">
+            <div id="pinScreen" class="fade-in">
+                <div class="header">
+                    <h1>🏧 Bank Saat</h1>
+                    <p>Selamat datang di ATM Online</p>
+                </div>
+                <div class="input-group">
+                    <label>Masukkan PIN Anda:</label>
+                    <div class="pin-display" id="pinDisplay">****</div>
+                </div>
+                <div class="keypad">
+                    <button onclick="inputPin('1')">1</button>
+                    <button onclick="inputPin('2')">2</button>
+                    <button onclick="inputPin('3')">3</button>
+                    <button onclick="inputPin('4')">4</button>
+                    <button onclick="inputPin('5')">5</button>
+                    <button onclick="inputPin('6')">6</button>
+                    <button onclick="inputPin('7')">7</button>
+                    <button onclick="inputPin('8')">8</button>
+                    <button onclick="inputPin('9')">9</button>
+                    <button onclick="clearPin()">Clear</button>
+                    <button onclick="inputPin('0')">0</button>
+                    <button onclick="submitPin()">Enter</button>
+                </div>
+                <div id="pinError"></div>
+            </div>
+
+            <div id="menuScreen" class="hidden">
+                <div class="header">
+                    <h1>🏧 Bank Saat</h1>
+                    <p>Pilih transaksi yang diinginkan</p>
+                </div>
+                <button class="menu-item" onclick="showScreen('transferScreen')">
+                    <span><span class="icon">💸</span>Transfer Uang</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('balanceScreen')">
+                    <span><span class="icon">💰</span>Cek Saldo</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('withdrawScreen')">
+                    <span><span class="icon">💵</span>Tarik Tunai</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('depositScreen')">
+                    <span><span class="icon">💳</span>Setor Tunai</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('historyScreen')">
+                    <span><span class="icon">📋</span>Riwayat Transaksi</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('changePinScreen')">
+                    <span><span class="icon">🔐</span>Ganti PIN</span>
+                    <span>→</span>
+                </button>
+                <button class="menu-item btn-danger" onclick="logout()">
+                    <span><span class="icon">🚪</span>Keluar</span>
+                    <span>→</span>
+                </button>
+            </div>
+
+            <div id="balanceScreen" class="hidden">
+                <div class="header">
+                    <h1>💰 Cek Saldo</h1>
+                </div>
+                <div class="balance-display">
+                    <div>Saldo Anda:</div>
+                    <div class="balance-amount" id="currentBalance">Rp 0</div>
+                </div>
+                <button class="btn btn-success" onclick="addToHistory('Cek Saldo'); showScreen('menuScreen')">Kembali ke Menu</button>
+            </div>
+
+            <div id="transferScreen" class="hidden">
+                <div class="header">
+                    <h1>💸 Transfer Uang</h1>
+                </div>
+                <div class="input-group">
+                    <label>No. Rekening Tujuan:</label>
+                    <input type="text" id="transferAccount" placeholder="Masukkan 10-16 digit nomor rekening">
+                </div>
+                <div class="input-group">
+                    <label>Jumlah Transfer:</label>
+                    <input type="number" id="transferAmount" placeholder="Masukkan jumlah transfer">
+                </div>
+                <div id="transferError"></div>
+                <button class="btn btn-success" onclick="processTransfer()">Transfer</button>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
+            </div>
+
+            <div id="withdrawScreen" class="hidden">
+                <div class="header">
+                    <h1>💵 Tarik Tunai</h1>
+                </div>
+                <button class="menu-item" onclick="processWithdraw(100000)">
+                    <span>Rp 100.000</span>
+                </button>
+                <button class="menu-item" onclick="processWithdraw(200000)">
+                    <span>Rp 200.000</span>
+                </button>
+                <button class="menu-item" onclick="processWithdraw(500000)">
+                    <span>Rp 500.000</span>
+                </button>
+                <button class="menu-item" onclick="processWithdraw(1000000)">
+                    <span>Rp 1.000.000</span>
+                </button>
+                <button class="menu-item" onclick="showScreen('customWithdrawScreen')">
+                    <span>Nominal Lain</span>
+                </button>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
+            </div>
+
+            <div id="customWithdrawScreen" class="hidden">
+                <div class="header">
+                    <h1>💵 Tarik Tunai</h1>
+                </div>
+                <div class="input-group">
+                    <label>Masukkan Nominal (kelipatan Rp 50.000):</label>
+                    <input type="number" id="customWithdrawAmount" placeholder="Contoh: 150000">
+                </div>
+                <div id="withdrawError"></div>
+                <button class="btn btn-success" onclick="processCustomWithdraw()">Tarik Tunai</button>
+                <button class="btn" onclick="showScreen('withdrawScreen')">Kembali</button>
+            </div>
+
+            <div id="depositScreen" class="hidden">
+                <div class="header">
+                    <h1>💳 Setor Tunai</h1>
+                </div>
+                <div class="input-group">
+                    <label>Jumlah Setor (minimal Rp 10.000):</label>
+                    <input type="number" id="depositAmount" placeholder="Masukkan jumlah setor">
+                </div>
+                <div id="depositError"></div>
+                <button class="btn btn-success" onclick="processDeposit()">Setor Tunai</button>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
+            </div>
+
+            <div id="historyScreen" class="hidden">
+                <div class="header">
+                    <h1>📋 Riwayat Transaksi</h1>
+                </div>
+                <div class="transaction-history" id="transactionHistory">
+                    <div class="transaction-item">
+                        <div>Belum ada transaksi</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
+            </div>
+
+            <div id="changePinScreen" class="hidden">
+                <div class="header">
+                    <h1>🔐 Ganti PIN</h1>
+                </div>
+                <div class="input-group">
+                    <label>PIN Lama:</label>
+                    <input type="password" id="oldPin" placeholder="Masukkan PIN lama">
+                </div>
+                <div class="input-group">
+                    <label>PIN Baru (4-6 digit):</label>
+                    <input type="password" id="newPin" placeholder="Masukkan PIN baru">
+                </div>
+                <div class="input-group">
+                    <label>Konfirmasi PIN Baru:</label>
+                    <input type="password" id="confirmPin" placeholder="Konfirmasi PIN baru">
+                </div>
+                <div id="changePinError"></div>
+                <button class="btn btn-success" onclick="processChangePin()">Ubah PIN</button>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
+            </div>
+
+            <div id="confirmationScreen" class="hidden">
+                <div class="header">
+                    <h1>✅ Konfirmasi Transaksi</h1>
+                </div>
+                <div id="confirmationDetails"></div>
+                <button class="btn btn-success" id="confirmBtn">Konfirmasi</button>
+                <button class="btn btn-danger" id="cancelBtn">Batal</button>
+            </div>
+
+            <div id="receiptScreen" class="hidden">
+                <div class="header">
+                    <h1>🧾 Struk Transaksi</h1>
+                </div>
+                <div class="receipt" id="receiptContent"></div>
+                <button class="btn" onclick="showScreen('menuScreen')">Kembali ke Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
