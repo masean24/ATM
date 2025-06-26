@@ -4,342 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Saat - ATM Online</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .atm-container {
-            background: #2c3e50;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            max-width: 450px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .atm-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
-        }
-
-        .screen {
-            background: #1a252f;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            min-height: 400px;
-            color: #ecf0f1;
-            position: relative;
-            border: 3px solid #34495e;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #3498db;
-        }
-
-        .header h1 {
-            color: #3498db;
-            font-size: 28px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            color: #bdc3c7;
-            font-size: 14px;
-        }
-
-        .menu-item {
-            background: linear-gradient(145deg, #34495e, #2c3e50);
-            border: none;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin: 8px 0;
-            width: 100%;
-            color: #ecf0f1;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
-            background: linear-gradient(145deg, #3498db, #2980b9);
-        }
-
-        .menu-item .icon {
-            font-size: 20px;
-            margin-right: 15px;
-        }
-
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .keypad button {
-            background: linear-gradient(145deg, #34495e, #2c3e50);
-            border: none;
-            border-radius: 8px;
-            padding: 15px;
-            color: #ecf0f1;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .keypad button:hover {
-            background: linear-gradient(145deg, #3498db, #2980b9);
-            transform: translateY(-1px);
-        }
-
-        .keypad button:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        .input-group {
-            margin: 20px 0;
-        }
-
-        .input-group label {
-            display: block;
-            color: #bdc3c7;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            background: #34495e;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 12px 15px;
-            color: #ecf0f1;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #2ecc71;
-            box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
-        }
-
-        .pin-display {
-            background: #2c3e50;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-            font-size: 24px;
-            font-family: monospace;
-            letter-spacing: 8px;
-            color: #3498db;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn {
-            background: linear-gradient(145deg, #3498db, #2980b9);
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        .btn-success {
-            background: linear-gradient(145deg, #2ecc71, #27ae60);
-        }
-
-        .btn-danger {
-            background: linear-gradient(145deg, #e74c3c, #c0392b);
-        }
-
-        .btn-warning {
-            background: linear-gradient(145deg, #f39c12, #e67e22);
-        }
-
-        .balance-display {
-            background: linear-gradient(145deg, #2ecc71, #27ae60);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-        }
-
-        .balance-amount {
-            font-size: 32px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .transaction-history {
-            max-height: 300px;
-            overflow-y: auto;
-            margin: 20px 0;
-        }
-
-        .transaction-item {
-            background: #34495e;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin: 8px 0;
-            border-left: 4px solid #3498db;
-            font-size: 14px;
-        }
-
-        .transaction-date {
-            color: #bdc3c7;
-            font-size: 12px;
-        }
-
-        .transaction-amount {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-
-        .error {
-            background: linear-gradient(145deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .success {
-            background: linear-gradient(145deg, #2ecc71, #27ae60);
-            color: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
-        }
-
-        .receipt {
-            background: #ecf0f1;
-            color: #2c3e50;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            border: 2px dashed #bdc3c7;
-        }
-
-        .receipt-title {
-            text-align: center;
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #bdc3c7;
-            padding-bottom: 5px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #3498db;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 480px) {
-            .atm-container {
-                margin: 10px;
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 24px;
-            }
-            
-            .keypad {
-                gap: 8px;
-            }
-            
-            .keypad button {
-                padding: 12px;
-                font-size: 16px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="atm-container">
         <div class="screen" id="screen">
-            <!-- PIN Input Screen -->
             <div id="pinScreen" class="fade-in">
                 <div class="header">
                     <h1>🏧 Bank Saat</h1>
@@ -366,7 +35,6 @@
                 <div id="pinError"></div>
             </div>
 
-            <!-- Main Menu Screen -->
             <div id="menuScreen" class="hidden">
                 <div class="header">
                     <h1>🏧 Bank Saat</h1>
@@ -402,7 +70,6 @@
                 </button>
             </div>
 
-            <!-- Balance Screen -->
             <div id="balanceScreen" class="hidden">
                 <div class="header">
                     <h1>💰 Cek Saldo</h1>
@@ -414,7 +81,6 @@
                 <button class="btn btn-success" onclick="addToHistory('Cek Saldo'); showScreen('menuScreen')">Kembali ke Menu</button>
             </div>
 
-            <!-- Transfer Screen -->
             <div id="transferScreen" class="hidden">
                 <div class="header">
                     <h1>💸 Transfer Uang</h1>
@@ -432,7 +98,6 @@
                 <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
             </div>
 
-            <!-- Withdraw Screen -->
             <div id="withdrawScreen" class="hidden">
                 <div class="header">
                     <h1>💵 Tarik Tunai</h1>
@@ -455,7 +120,6 @@
                 <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
             </div>
 
-            <!-- Custom Withdraw Screen -->
             <div id="customWithdrawScreen" class="hidden">
                 <div class="header">
                     <h1>💵 Tarik Tunai</h1>
@@ -469,7 +133,6 @@
                 <button class="btn" onclick="showScreen('withdrawScreen')">Kembali</button>
             </div>
 
-            <!-- Deposit Screen -->
             <div id="depositScreen" class="hidden">
                 <div class="header">
                     <h1>💳 Setor Tunai</h1>
@@ -483,7 +146,6 @@
                 <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
             </div>
 
-            <!-- History Screen -->
             <div id="historyScreen" class="hidden">
                 <div class="header">
                     <h1>📋 Riwayat Transaksi</h1>
@@ -496,7 +158,6 @@
                 <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
             </div>
 
-            <!-- Change PIN Screen -->
             <div id="changePinScreen" class="hidden">
                 <div class="header">
                     <h1>🔐 Ganti PIN</h1>
@@ -518,7 +179,6 @@
                 <button class="btn" onclick="showScreen('menuScreen')">Kembali</button>
             </div>
 
-            <!-- Confirmation Screen -->
             <div id="confirmationScreen" class="hidden">
                 <div class="header">
                     <h1>✅ Konfirmasi Transaksi</h1>
@@ -528,7 +188,6 @@
                 <button class="btn btn-danger" id="cancelBtn">Batal</button>
             </div>
 
-            <!-- Receipt Screen -->
             <div id="receiptScreen" class="hidden">
                 <div class="header">
                     <h1>🧾 Struk Transaksi</h1>
@@ -539,448 +198,6 @@
         </div>
     </div>
 
-// ATM System Variables
-const users = [
-    { pin: '1234', balance: 1500000 },
-    { pin: '2024', balance: 2000000 },
-    { pin: '5656', balance: 1750000 }
-];
-
-let currentUser = null;
-let currentPin = '';
-let pinAttempts = 0;
-let transactionHistory = [];
-
-const SALDO_MINIMUM = 50000;
-const MAX_TRANSFER = 25000000;
-const MAX_PENARIKAN = 5000000;
-
-// Utility Functions
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0
-    }).format(amount);
-}
-
-function getCurrentTime() {
-    return new Date().toLocaleString('id-ID');
-}
-
-function addToHistory(transaction) {
-    const timestamp = getCurrentTime();
-    transactionHistory.push({
-        date: timestamp,
-        transaction: transaction
-    });
-    updateHistoryDisplay();
-}
-
-function updateHistoryDisplay() {
-    const historyDiv = document.getElementById('transactionHistory');
-    if (transactionHistory.length === 0) {
-        historyDiv.innerHTML = '<div class="transaction-item"><div>Belum ada transaksi</div></div>';
-        return;
-    }
-
-    historyDiv.innerHTML = transactionHistory.slice(-10).reverse().map((item, index) => `
-        <div class="transaction-item">
-            <div>${item.transaction}</div>
-            <div class="transaction-date">${item.date}</div>
-        </div>
-    `).join('');
-}
-
-function showError(elementId, message) {
-    const errorDiv = document.getElementById(elementId);
-    errorDiv.innerHTML = `<div class="error">❌ ${message}</div>`;
-    setTimeout(() => {
-        errorDiv.innerHTML = '';
-    }, 3000);
-}
-
-function showSuccess(elementId, message) {
-    const successDiv = document.getElementById(elementId);
-    successDiv.innerHTML = `<div class="success">✅ ${message}</div>`;
-    setTimeout(() => {
-        successDiv.innerHTML = '';
-    }, 3000);
-}
-
-// Screen Management
-function showScreen(screenId) {
-    // Hide all screens
-    const screens = document.querySelectorAll('.screen > div');
-    screens.forEach(screen => screen.classList.add('hidden'));
-    
-    // Show selected screen
-    document.getElementById(screenId).classList.remove('hidden');
-    document.getElementById(screenId).classList.add('fade-in');
-
-    // Update balance display if showing balance screen
-    if (screenId === 'balanceScreen') {
-        document.getElementById('currentBalance').textContent = formatCurrency(currentUser.balance);
-    }
-}
-
-// PIN Management
-function inputPin(digit) {
-    if (currentPin.length < 6) {
-        currentPin += digit;
-        updatePinDisplay();
-    }
-}
-
-function clearPin() {
-    currentPin = '';
-    updatePinDisplay();
-}
-
-function updatePinDisplay() {
-    const display = document.getElementById('pinDisplay');
-    display.textContent = '*'.repeat(currentPin.length) || '****';
-}
-
-function submitPin() {
-    if (currentPin.length < 4) {
-        showError('pinError', 'PIN minimal 4 digit!');
-        return;
-    }
-
-    const user = users.find(u => u.pin === currentPin);
-    if (user) {
-        currentUser = user;
-        pinAttempts = 0;
-        showSuccess('pinError', 'PIN benar! Selamat datang.');
-        setTimeout(() => {
-            showScreen('menuScreen');
-        }, 1500);
-    } else {
-        pinAttempts++;
-        if (pinAttempts >= 3) {
-            showError('pinError', 'Rekening diblokir! Terlalu banyak percobaan salah.');
-            setTimeout(() => {
-                location.reload();
-            }, 3000);
-        } else {
-            showError('pinError', `PIN salah! Sisa percobaan: ${3 - pinAttempts}`);
-        }
-    }
-    
-    currentPin = '';
-    updatePinDisplay();
-}
-
-// Transaction Functions
-function processTransfer() {
-    const account = document.getElementById('transferAccount').value;
-    const amount = parseInt(document.getElementById('transferAmount').value);
-
-    // Validation
-    if (!account || account.length < 10 || account.length > 16 || !/^\d+$/.test(account)) {
-        showError('transferError', 'Nomor rekening tidak valid! Harus 10-16 digit angka.');
-        return;
-    }
-
-    if (!amount || amount <= 0) {
-        showError('transferError', 'Jumlah transfer harus lebih dari 0!');
-        return;
-    }
-
-    if (amount > MAX_TRANSFER) {
-        showError('transferError', `Jumlah transfer melebihi batas maksimum ${formatCurrency(MAX_TRANSFER)}!`);
-        return;
-    }
-
-    if (amount > currentUser.balance) {
-        showError('transferError', 'Saldo tidak mencukupi!');
-        return;
-    }
-
-    if (currentUser.balance - amount < SALDO_MINIMUM) {
-        showError('transferError', `Saldo setelah transfer tidak boleh kurang dari ${formatCurrency(SALDO_MINIMUM)}!`);
-        return;
-    }
-
-    // Show confirmation
-    showConfirmation('Transfer', amount, account, () => {
-        currentUser.balance -= amount;
-        addToHistory(`Transfer ke ${account}: ${formatCurrency(amount)}`);
-        showReceipt('TRANSFER', amount, account);
-        document.getElementById('transferAccount').value = '';
-        document.getElementById('transferAmount').value = '';
-    });
-}
-
-function processWithdraw(amount) {
-    if (amount > MAX_PENARIKAN) {
-        alert(`Jumlah penarikan melebihi batas maksimum ${formatCurrency(MAX_PENARIKAN)}!`);
-        return;
-    }
-
-    if (amount > currentUser.balance) {
-        alert('Saldo tidak mencukupi!');
-        return;
-    }
-
-    if (currentUser.balance - amount < SALDO_MINIMUM) {
-        alert(`Saldo setelah penarikan tidak boleh kurang dari ${formatCurrency(SALDO_MINIMUM)}!`);
-        return;
-    }
-
-    showConfirmation('Penarikan Tunai', amount, '', () => {
-        currentUser.balance -= amount;
-        addToHistory(`Tarik Tunai: ${formatCurrency(amount)}`);
-        showReceipt('PENARIKAN TUNAI', amount);
-    });
-}
-
-function processCustomWithdraw() {
-    const amount = parseInt(document.getElementById('customWithdrawAmount').value);
-
-    if (!amount || amount <= 0) {
-        showError('withdrawError', 'Nominal tidak valid!');
-        return;
-    }
-
-    if (amount % 50000 !== 0) {
-        showError('withdrawError', 'Nominal harus kelipatan Rp 50.000!');
-        return;
-    }
-
-    if (amount > MAX_PENARIKAN) {
-        showError('withdrawError', `Jumlah penarikan melebihi batas maksimum ${formatCurrency(MAX_PENARIKAN)}!`);
-        return;
-    }
-
-    if (amount > currentUser.balance) {
-        showError('withdrawError', 'Saldo tidak mencukupi!');
-        return;
-    }
-
-    if (currentUser.balance - amount < SALDO_MINIMUM) {
-        showError('withdrawError', `Saldo setelah penarikan tidak boleh kurang dari ${formatCurrency(SALDO_MINIMUM)}!`);
-        return;
-    }
-
-    showConfirmation('Penarikan Tunai', amount, '', () => {
-        currentUser.balance -= amount;
-        addToHistory(`Tarik Tunai: ${formatCurrency(amount)}`);
-        showReceipt('PENARIKAN TUNAI', amount);
-        document.getElementById('customWithdrawAmount').value = '';
-    });
-}
-
-function processDeposit() {
-    const amount = parseInt(document.getElementById('depositAmount').value);
-
-    if (!amount || amount < 10000) {
-        showError('depositError', 'Nominal setor minimal Rp 10.000!');
-        return;
-    }
-
-    showConfirmation('Setor Tunai', amount, '', () => {
-        currentUser.balance += amount;
-        addToHistory(`Setor Tunai: ${formatCurrency(amount)}`);
-        showReceipt('SETOR TUNAI', amount);
-        document.getElementById('depositAmount').value = '';
-    });
-}
-
-function processChangePin() {
-    const oldPin = document.getElementById('oldPin').value;
-    const newPin = document.getElementById('newPin').value;
-    const confirmPin = document.getElementById('confirmPin').value;
-
-    if (oldPin !== currentUser.pin) {
-        showError('changePinError', 'PIN lama salah!');
-        return;
-    }
-
-    if (newPin.length < 4 || newPin.length > 6 || !/^\d+$/.test(newPin)) {
-        showError('changePinError', 'PIN baru harus 4-6 digit angka!');
-        return;
-    }
-
-    if (newPin !== confirmPin) {
-        showError('changePinError', 'Konfirmasi PIN tidak cocok!');
-        return;
-    }
-
-    currentUser.pin = newPin;
-    addToHistory('Ganti PIN berhasil');
-    showSuccess('changePinError', 'PIN berhasil diubah!');
-    
-    // Clear form
-    document.getElementById('oldPin').value = '';
-    document.getElementById('newPin').value = '';
-    document.getElementById('confirmPin').value = '';
-    
-    setTimeout(() => {
-        showScreen('menuScreen');
-    }, 2000);
-}
-
-// Confirmation and Receipt Functions
-function showConfirmation(type, amount, target, callback) {
-    const detailsDiv = document.getElementById('confirmationDetails');
-    let details = `
-        <div class="input-group">
-            <label>Jenis Transaksi:</label>
-            <div style="color: #3498db; font-weight: bold;">${type}</div>
-        </div>
-        <div class="input-group">
-            <label>Jumlah:</label>
-            <div style="color: #2ecc71; font-weight: bold;">${formatCurrency(amount)}</div>
-        </div>
-    `;
-    
-    if (target) {
-        details += `
-            <div class="input-group">
-                <label>Tujuan:</label>
-                <div style="color: #f39c12; font-weight: bold;">${target}</div>
-            </div>
-        `;
-    }
-    
-    details += `
-        <div class="input-group">
-            <label>Saldo Sekarang:</label>
-            <div style="color: #ecf0f1;">${formatCurrency(currentUser.balance)}</div>
-        </div>
-        <div class="input-group">
-            <label>Saldo Setelah:</label>
-            <div style="color: #e74c3c;">${formatCurrency(type === 'Setor Tunai' ? currentUser.balance + amount : currentUser.balance - amount)}</div>
-        </div>
-    `;
-    
-    detailsDiv.innerHTML = details;
-    
-    // Set button actions
-    document.getElementById('confirmBtn').onclick = () => {
-        callback();
-        showScreen('receiptScreen');
-    };
-    
-    document.getElementById('cancelBtn').onclick = () => {
-        showScreen('menuScreen');
-    };
-    
-    showScreen('confirmationScreen');
-}
-
-function showReceipt(type, amount, target = '') {
-    const receiptDiv = document.getElementById('receiptContent');
-    let receipt = `
-        <div class="receipt-title">BANK SAAT - ATM RECEIPT</div>
-        <div>${getCurrentTime()}</div>
-        <hr style="margin: 10px 0;">
-        <div><strong>Jenis Transaksi:</strong> ${type}</div>
-        <div><strong>Jumlah:</strong> ${formatCurrency(amount)}</div>
-    `;
-    
-    if (target) {
-        receipt += `<div><strong>Tujuan:</strong> ${target}</div>`;
-    }
-    
-    receipt += `
-        <div><strong>Saldo Akhir:</strong> ${formatCurrency(currentUser.balance)}</div>
-        <hr style="margin: 10px 0;">
-        <div style="text-align: center;">
-            <div>Terima kasih telah menggunakan</div>
-            <div>layanan Bank Saat</div>
-            <div style="margin-top: 10px;">⭐⭐⭐⭐⭐</div>
-        </div>
-    `;
-    
-    receiptDiv.innerHTML = receipt;
-}
-
-// Logout function
-function logout() {
-    if (confirm('Apakah Anda yakin ingin keluar?')) {
-        currentUser = null;
-        currentPin = '';
-        pinAttempts = 0;
-        transactionHistory = [];
-        showScreen('pinScreen');
-        // Reset forms
-        document.querySelectorAll('input').forEach(input => input.value = '');
-        document.querySelectorAll('[id$="Error"]').forEach(div => div.innerHTML = '');
-        updatePinDisplay();
-    }
-}
-
-// Initialize application
-document.addEventListener('DOMContentLoaded', function() {
-    // Add keyboard support for PIN input
-    document.addEventListener('keydown', function(e) {
-        if (document.getElementById('pinScreen').classList.contains('hidden')) return;
-        
-        if (e.key >= '0' && e.key <= '9') {
-            inputPin(e.key);
-        } else if (e.key === 'Enter') {
-            submitPin();
-        } else if (e.key === 'Backspace' || e.key === 'Delete') {
-            clearPin();
-        }
-    });
-    
-    // Add loading animation for transactions
-    const originalShowConfirmation = showConfirmation;
-    showConfirmation = function(type, amount, target, callback) {
-        const loadingDiv = document.createElement('div');
-        loadingDiv.innerHTML = '<div class="loading"></div> Memproses...';
-        loadingDiv.style.textAlign = 'center';
-        loadingDiv.style.padding = '20px';
-        loadingDiv.style.color = '#3498db';
-        
-        document.getElementById('confirmationDetails').innerHTML = '';
-        document.getElementById('confirmationDetails').appendChild(loadingDiv);
-        showScreen('confirmationScreen');
-        
-        setTimeout(() => {
-            originalShowConfirmation(type, amount, target, callback);
-        }, 1000);
-    };
-    
-    // Auto-focus on input fields
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                const screen = mutation.target;
-                if (!screen.classList.contains('hidden')) {
-                    const firstInput = screen.querySelector('input[type="text"], input[type="number"], input[type="password"]');
-                    if (firstInput) {
-                        setTimeout(() => firstInput.focus(), 100);
-                    }
-                }
-            }
-        });
-    });
-    
-    document.querySelectorAll('.screen > div').forEach(screen => {
-        observer.observe(screen, { attributes: true });
-    });
-    
-    // Add Enter key support for forms
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const screen = this.closest('[id$="Screen"]');
-                const submitBtn = screen.querySelector('.btn-success');
-                if (submitBtn) {
-                    submitBtn.click();
-                }
-            }
-        });
-    });
-    
-    // Initialize PIN display
-    updatePinDisplay();
-    
-    console.log('🏧 Bank Saat ATM System berhasil dimuat!');
-    console.log('📝 PIN tersedia: 1234, 2024, 5656');
-});
+    <script src="script.js"></script>
+</body>
+</html>
